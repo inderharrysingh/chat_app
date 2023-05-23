@@ -1,12 +1,12 @@
-import * as express from 'express';
-import * as http from 'http';
-import { Server } from 'socket.io';
-import * as cors from 'cors';
+import  express from 'express';
+import http from 'http';
+import { Server } from 'socket.io'
+import  cors from 'cors';
 
 
 
-const app = express.default();
-app.use( cors.default({ origin : "*", methods : ["POST", "GET"]}));
+const app = express();
+app.use( cors({ origin : "*", methods : ["POST", "GET"]}));
 
 const socketCorsSetting = {
     origin : ['*']
@@ -14,7 +14,7 @@ const socketCorsSetting = {
 
 
 const server = http.createServer(app);
-const webSocket = new Server( server, { cors : socketCorsSetting, path : '/room'  } );
+const webSocket = new Server( server, { cors : socketCorsSetting, path : '/room'  } ); // adding middle ware and custome options
 
 
 
@@ -23,7 +23,13 @@ app.get( "/" , ( req  : express.Request , res : express.Response ) => {
 })
 
 
+
 webSocket.on( "connection", (socket) => {
+
+    socket.on("message", (msg : string ) => {
+
+        webSocket.emit("panda", msg ); // sends message to everyone 
+    })
 
 })
 

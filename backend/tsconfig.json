@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
 
-    "target": "ES2022", 
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "target": "ES2020", 
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true, 
     "strict": true, 
     "outDir": "dist",
-    "allowSyntheticDefaultImports" : true
+    "allowSyntheticDefaultImports" : true,
+    "esModuleInterop": true
   },
   "include": [ "src/**/*.ts" ]
 }
