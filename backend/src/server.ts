@@ -27,7 +27,7 @@ app.get( "/" , ( req  : express.Request , res : express.Response ) => {
 webSocket.on( "connection", (socket) => {
 
     socket.on("message", (msg : string ) => {
-
+        console.log(msg);
         webSocket.emit("panda", msg ); // sends message to everyone 
     })
 

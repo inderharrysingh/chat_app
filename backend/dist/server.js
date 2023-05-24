@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 });
 webSocket.on("connection", (socket) => {
     socket.on("message", (msg) => {
+        console.log(msg);
         webSocket.emit("panda", msg); // sends message to everyone 
     });
 });
