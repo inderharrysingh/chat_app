@@ -9,12 +9,12 @@ const app = express();
 app.use( cors({ origin : "*", methods : ["POST", "GET"]}));
 
 const socketCorsSetting = {
-    origin : ['*']
+    origin : "*"
 }
 
 
-const server = http.createServer(app);
-const webSocket = new Server( server, { cors : socketCorsSetting, path : '/room'  } ); // adding middle ware and custome options
+const httpServer = http.createServer(app);
+const io = new Server( httpServer, { cors : socketCorsSetting  } ); // adding middle ware and custome options
 
 
 
@@ -24,17 +24,23 @@ app.get( "/" , ( req  : express.Request , res : express.Response ) => {
 
 
 
-webSocket.on( "connection", (socket) => {
+io.on( "connection", (socket) => {
+    console.log('someone connected !');
+    io.emit("message" , "What's your name bitch ");
 
-    socket.on("message", (msg : string ) => {
+    socket.on("message", (msg) => {
         console.log(msg);
-        webSocket.emit("panda", msg ); // sends message to everyone 
+        io.emit("message", "got it bro");
     })
+
+
+    socket.on('disconnect', function() {
+        console.log('Client disconnected.');
+    });
 
 })
 
-
-server.listen( 3000, () => {
+httpServer.listen( 3000, () => {
     console.log("Listening on port 3000, bitch !");
 })
 
